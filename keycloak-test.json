@@ -1,0 +1,9 @@
+{
+  "realm": "gtaa-demo",
+  "auth-server-url": "https://sso-test.vpro.nl/auth",
+  "ssl-required": "external",
+  "resource": "demo-node-backend",
+  "credentials": {
+    "secret": ""
+  }
+}
