@@ -1,16 +1,19 @@
 # Useful to know
 
-Deploy to staging/test environment:
-./node_modules/shipit-cli/bin/shipit test deploy
+### How to run the app?
 
-Check it out at: https://demo-cms-gtaa.binnenkort-op.vpro.nl
+**1 Install the dependencies in the node_modules folder** 
 
+After opening the project in your IDE, run de command `npm install` to install all modules listed as dependencies in the package.json.
 
-## bij opstarten je API-key meegeven
+**2 Provide your APIkey when starting up the project**
 
-
-Om de app te gebruiken, heb je schrijfrechten nodig op de NPO API. Geef daarom bij het opstarten de apikey mee. Het opstart-commando wordt dan als volgt:
+You need to have permission to post items to the NPO publisher API. Therefore provide your apikey when running the app, as per the example below:
  
- `API_KEY=vulhierjeapikeyin node index.js -g`
+ `API_KEY=insertyourcredentialshere node index.js -g`
 
+**3  Deploy with shipit**
 
+This app uses shipit as a deployment tool. To deploy to your staging/test environment, run:
+
+`./node_modules/shipit-cli/bin/shipit test deploy`

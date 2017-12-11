@@ -1,15 +1,14 @@
 var path = require('path');
 var appDir = path.dirname(require.main.filename);
 
-var PropertiesReader = require('properties-reader');
-var properties = PropertiesReader(appDir + '/config/demo-cms-gtaa.properties');
+
 
 const commandLineArgs = require('command-line-args');
 const optionDefinitions = [
-    { name: 'port', alias: 'P', type: Number, defaultValue: properties.get("port")},
+    { name: 'port', alias: 'P', type: Number, defaultValue: "3000"},
     //{ name: 'gtaaUIHost', alias: 'g', type: String, defaultValue: "https://rs-dev.poms.omroep.nl/v1" },
-    { name: 'gtaaUIHost', alias: 'g', type: String, defaultValue: properties.get("gtaaUIHost") },
-    { name: 'signService', alias: 's', type: String, defaultValue: properties.get("signService") },
+    { name: 'gtaaUIHost', alias: 'g', type: String, defaultValue: "http://localhost:8070/v1"},
+    { name: 'signService', alias: 's', type: String, defaultValue: "http://localhost:3000/sign"},
 ];
 
 const options = commandLineArgs(optionDefinitions);
