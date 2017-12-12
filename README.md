@@ -1,4 +1,4 @@
-# Useful to know
+## Useful to know
 
 ### How to run the app?
 
@@ -11,7 +11,7 @@ Navigate to the project directory and execute the command
 This installs all modules listed as dependencies in the package.json.
 
 
-**2  Create a .env file in the root directory
+**2  Create a .env file in the root directory**
 
 The app uses the **dotenv module** to store certain configuration separate from code, such as APIkeys.
 
@@ -35,3 +35,13 @@ This app uses shipit as a deployment tool. To deploy to your staging/test enviro
 
 
  
+ ### Keycloak
+ 
+ You can enable authentication with keycloak by including the following lines of code:
+ 
+ `app.use(keycloak.middleware({
+       logout: '/logout',
+       admin: '/'
+       }))`
+ 
+ When enabling this option, the `secret` attribute in `keycloak.json` requires a value. 
