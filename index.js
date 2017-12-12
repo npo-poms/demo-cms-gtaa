@@ -1,13 +1,19 @@
 var path = require('path');
 var appDir = path.dirname(require.main.filename);
 
+const init = require('dotenv').config({path: appDir + '/.env'})
 
+if (init.error) {
+    throw init.error
+}
+
+console.log(init.parsed)
 
 const commandLineArgs = require('command-line-args');
 const optionDefinitions = [
-    { name: 'port', alias: 'P', type: Number, defaultValue: "3000"},
+    { name: 'port', alias: 'P', type: Number, defaultValue: process.env.PORT},
     //{ name: 'gtaaUIHost', alias: 'g', type: String, defaultValue: "https://rs-dev.poms.omroep.nl/v1" },
-    { name: 'gtaaUIHost', alias: 'g', type: String, defaultValue: "http://localhost:8070/v1"},
+    { name: 'gtaaUIHost', alias: 'g', type: String, defaultValue: process.env.HOST},
     { name: 'signService', alias: 's', type: String, defaultValue: "http://localhost:3000/sign"},
 ];
 
@@ -65,10 +71,11 @@ var keycloak = new Keycloak({
     store: memoryStore
 });
 
-app.use(keycloak.middleware({
-    logout: '/logout',
-    admin: '/'
-}));
+// undo commend out if you want to activate keycloak log-in
+// app.use(keycloak.middleware({
+//     logout: '/logout',
+//     admin: '/'
+// }));
 
 var jwt = require('jsonwebtoken');
 
@@ -85,13 +92,11 @@ function sign(person, username) {
 }
 
 function createJWT(req) {
+    var username = process.env.API_USER;
+    var issuer =  process.env.BROADCASTER ||'demo-app';
     var expires = Math.floor(Date.now()/1000) + (60 * (60*12));
-    var token = jwt.sign({exp: expires}, process.env.API_KEY, {
+    var token = jwt.sign({exp: expires, usr: username, iss: issuer}, process.env.API_KEY, {
         algorithm: 'HS512',
-        header: {
-            'usr': req.kauth.grant.access_token.content.preferred_username,
-            'iss': 'demo-cms',
-        },
     });
     console.log(token);
     return token;
@@ -102,9 +107,10 @@ var request = require('request');
 var bodyParser = require("body-parser");
 var jsonParser = bodyParser.json();
 
+
 // A normal un-protected public URL.
 
-app.get('/', keycloak.protect(), function (req, res) {
+app.get('/', function (req, res) {
     res.render('index',
         {
             layout: false,
