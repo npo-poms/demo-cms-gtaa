@@ -81,7 +81,7 @@ var jwt = require('jsonwebtoken');
 
 function sign(person, username) {
     var singed = jwt.sign(person, process.env.API_KEY, {
-        algorithm: 'HS512',
+        algorithm: 'HS256',
         header: {
             'iss': 'demo-cms',
             'usr': username
@@ -96,7 +96,7 @@ function createJWT(req) {
     var issuer =  process.env.BROADCASTER ||'demo-app';
     var expires = Math.floor(Date.now()/1000) + (60 * (60*12));
     var token = jwt.sign({exp: expires, usr: username, iss: issuer}, process.env.API_KEY, {
-        algorithm: 'HS512',
+        algorithm: 'HS256',
     });
     console.log(token);
     return token;

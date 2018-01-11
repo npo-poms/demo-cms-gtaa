@@ -45,3 +45,5 @@ This app uses shipit as a deployment tool. To deploy to your staging/test enviro
        }))`
  
  When enabling this option, the `secret` attribute in `keycloak.json` requires a value. 
+ 
+ 
